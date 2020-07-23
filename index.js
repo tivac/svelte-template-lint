@@ -9,7 +9,7 @@ const rules = globquire([
 
 const keys = Object.keys(rules);
 
-module.exports = (id, src) => {
+module.exports = (id, src, config) => {
     const results = {
         warnings : [],
         errors   : [],
@@ -18,6 +18,7 @@ module.exports = (id, src) => {
     const meta = {
         warn  : (info) => results.warnings.push(info),
         error : (info) => results.errors.push(info),
+        config,
     };
 
     const ast = svelte.parse(src, { filename : id });

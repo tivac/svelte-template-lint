@@ -23,6 +23,7 @@
     "svelte": "^3.24.0"
   },
   "dependencies": {
+    "cosmiconfig": "^6.0.0",
     "globby": "^11.0.1",
     "meow": "^7.0.1",
     "require-glob": "^3.2.0"
