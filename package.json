@@ -1,0 +1,33 @@
+{
+  "name": "svelte-template-lint",
+  "version": "0.0.1",
+  "description": "Prototyping a svelte template linter",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "svelte",
+    "lint",
+    "template",
+    "html"
+  ],
+  "author": "Pat Cavit <npm@patcavit.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@tivac/eslint-config": "^2.4.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.5.0",
+    "eslint-plugin-jest": "^23.18.0",
+    "jest": "^26.1.0",
+    "svelte": "^3.24.0"
+  },
+  "dependencies": {
+    "globby": "^11.0.1",
+    "meow": "^7.0.1",
+    "require-glob": "^3.2.0"
+  },
+  "peerDependencies": {
+    "svelte": "^3.0.0"
+  }
+}
