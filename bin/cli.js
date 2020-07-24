@@ -3,7 +3,6 @@
 const fs = require("fs/promises");
 
 const meow = require("meow");
-const { cosmicconfigSync : loadConfig } = ;
 const { sync : globby } = require("globby");
 
 const lint = require("../index.js");
@@ -12,7 +11,7 @@ const findConfig = require("cosmiconfig").cosmiconfigSync("svelte-template-lint"
     packageProp : "configs.svelteTemplateLint",
 });
 
-const config = findConfig.search();
+const { config } = findConfig.search();
 
 const cli = meow(`
     Usage

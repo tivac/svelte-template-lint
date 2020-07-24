@@ -1,0 +1,4 @@
+# Dont' want to commit manual tests, but do want this
+# folder to be created.
+*
+!.gitignore

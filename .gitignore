@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Don't want to commit local testing config
+.svelte-template-lintrc.js

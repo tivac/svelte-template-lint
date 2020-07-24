@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`control-children-indentation - indent 4 failure 1`] = `
+Object {
+  "errors": Array [],
+  "warnings": Array [],
+}
+`;
+
+exports[`control-children-indentation - indent 4 success 1`] = `
+Object {
+  "errors": Array [],
+  "warnings": Array [],
+}
+`;

@@ -17,6 +17,7 @@
   "devDependencies": {
     "@tivac/eslint-config": "^2.4.0",
     "babel-eslint": "^10.1.0",
+    "dedent": "^0.7.0",
     "eslint": "^7.5.0",
     "eslint-plugin-jest": "^23.18.0",
     "jest": "^26.1.0",
@@ -24,7 +25,6 @@
   },
   "dependencies": {
     "cosmiconfig": "^6.0.0",
-    "globby": "^11.0.1",
     "meow": "^7.0.1",
     "require-glob": "^3.2.0"
   },
