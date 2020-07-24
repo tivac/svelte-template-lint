@@ -5,21 +5,21 @@ const dedent = require("dedent");
 const lint = require("../../index.js");
 
 const specimens = [
-    // [
-    //     "indent 4 success",
-    //     `
-    //     {#if true}
-    //         <div>a</div>
-    //     {/if}
-    //     `,
-    //     {
-    //         rules : {
-    //             "control-children-indentation" : [ "warn", {
-    //                 indent : 4,
-    //             }],
-    //         },
-    //     },
-    // ],
+    [
+        "indent 4 success",
+        `
+        {#if true}
+            <div>a</div>
+        {/if}
+        `,
+        {
+            rules : {
+                "control-children-indentation" : [ "warn", {
+                    indent : 4,
+                }],
+            },
+        },
+    ],
     [
         "indent 4 failure",
         `

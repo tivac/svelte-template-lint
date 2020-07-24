@@ -1,15 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`control-children-indentation - indent 4 failure 1`] = `
-Object {
-  "errors": Array [],
-  "warnings": Array [],
-}
+Array [
+  Object {
+    "node": Object {
+      "attributes": Array [],
+      "children": Array [
+        Object {
+          "data": "a",
+          "end": 17,
+          "raw": "a",
+          "start": 16,
+          "type": "Text",
+        },
+      ],
+      "end": 23,
+      "name": "div",
+      "start": 11,
+      "type": "Element",
+    },
+    "plugn": "control-children-indentation",
+  },
+]
 `;
 
-exports[`control-children-indentation - indent 4 success 1`] = `
-Object {
-  "errors": Array [],
-  "warnings": Array [],
-}
-`;
+exports[`control-children-indentation - indent 4 success 1`] = `Array []`;
