@@ -16,23 +16,19 @@ const ruleFns = globquire([
 });
 
 module.exports = async (id, src, config) => {
-    const results = {
-        warnings : [],
-        errors   : [],
-    };
+    const reports = [];
 
     const meta = {
-        warn  : (info) => results.warnings.push(info),
-        error : (info) => results.errors.push(info),
+        report : (info) => reports.push(info),
         config,
     };
 
     const ast = svelte.parse(src, { filename : id });
 
     const { rules } = config;
-    const keys = Object.keys(rules);
+    const names = Object.keys(rules);
 
-    const plugins = await Promise.all(keys.map((rule) => {
+    const plugins = await Promise.all(names.map((rule) => {
         let ruleConfig = config.rules[rule];
 
         if(!Array.isArray(ruleConfig)) {
@@ -49,7 +45,7 @@ module.exports = async (id, src, config) => {
         });
     }));
 
-    const visitors = plugins.reduce((acc, result) => {
+    const keys = plugins.reduce((acc, result) => {
         Object.keys(result).forEach((prop) => {
             const [ name, side = "enter" ] = prop.split(":");
             const key = `${name}:${side}`;
@@ -66,30 +62,45 @@ module.exports = async (id, src, config) => {
 
     svelte.walk(ast, {
         enter(node, parent, prop, index) {
-            const key = `${node.type}:enter`;
+            const propKey = `${node.type}:enter`;
 
-            if(!visitors.has(key)) {
-                return;
+            if(keys.has(propKey)) {
+                keys.get(propKey).forEach((visitor) => {
+                    visitor(node, parent, prop, index);
+                });
             }
+
+            const starKey = "*:enter";
             
-            visitors.get(key).forEach((visitor) => {
-                visitor(node, parent, prop, index);
-            });
+            if(keys.has(starKey)) {
+                keys.get(starKey).forEach((visitor) => {
+                    visitor(node, parent, prop, index);
+                });
+            }
         },
 
         leave(node, parent, prop, index) {
-            const key = `${node.type}:exit`;
+            const propKey = `${node.type}:exit`;
 
-            if(!visitors.has(key)) {
-                return;
+            if(keys.has(propKey)) {
+                keys.get(propKey).forEach((visitor) => {
+                    visitor(node, parent, prop, index);
+                });
             }
+
+            const starKey = "*:exit";
             
-            visitors.get(key).forEach((visitor) => {
-                visitor(node, parent, prop, index);
-            });
+            if(keys.has(starKey)) {
+                keys.get(starKey).forEach((visitor) => {
+                    visitor(node, parent, prop, index);
+                });
+            }
         },
     });
 
-    return results;
+    // TODO: for each report look at source rule and determine if it's an
+    // error or warning, then split all reports apart appropriately
+
+    return reports;
 };
 

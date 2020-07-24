@@ -36,5 +36,5 @@ Promise.all(files.map(async (id) => {
     return [ id, await lint(id, src, config) ];
 }))
 .then((results) => {
-    console.log(results);
+    console.log(JSON.stringify(results, null, 4));
 });
