@@ -1,25 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`control-children-indentation - indent 0 failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 0, got 4 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`control-children-indentation - indent 0 success 1`] = `Array []`;
+
 exports[`control-children-indentation - indent 4 failure 1`] = `
 Array [
   Object {
-    "node": Object {
-      "attributes": Array [],
-      "children": Array [
-        Object {
-          "data": "a",
-          "end": 17,
-          "raw": "a",
-          "start": 16,
-          "type": "Text",
-        },
-      ],
-      "end": 23,
-      "name": "div",
-      "start": 11,
-      "type": "Element",
-    },
-    "plugn": "control-children-indentation",
+    "message": "Expected indentation of 4, got 0 instead",
+    "plugin": "control-children-indentation",
   },
 ]
 `;

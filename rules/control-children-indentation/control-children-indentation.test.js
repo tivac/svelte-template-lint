@@ -4,6 +4,14 @@ const dedent = require("dedent");
 
 const lint = require("../../index.js");
 
+const config = (indent) => ({
+    rules : {
+        "control-children-indentation" : [ "warn", {
+            indent,
+        }],
+    },
+});
+
 const specimens = [
     [
         "indent 4 success",
@@ -12,13 +20,7 @@ const specimens = [
             <div>a</div>
         {/if}
         `,
-        {
-            rules : {
-                "control-children-indentation" : [ "warn", {
-                    indent : 4,
-                }],
-            },
-        },
+        config(4),
     ],
     [
         "indent 4 failure",
@@ -27,13 +29,25 @@ const specimens = [
         <div>a</div>
         {/if}
         `,
-        {
-            rules : {
-                "control-children-indentation" : [ "warn", {
-                    indent : 4,
-                }],
-            },
-        },
+        config(4),
+    ],
+    [
+        "indent 0 success",
+        `
+        {#if true}
+        <div>a</div>
+        {/if}
+        `,
+        config(0),
+    ],
+    [
+        "indent 0 failure",
+        `
+        {#if true}
+            <div>a</div>
+        {/if}
+        `,
+        config(0),
     ],
 ];
 
@@ -42,6 +56,9 @@ it.each(
 )("control-children-indentation - %s", async (name, spec, options) => {
     const result = await lint(`${name}.svelte`, spec, options);
 
-    expect(result).toMatchSnapshot();
+    // Remove node prop from returned messages, makes snapshots too chatty
+    const pruned = result.map(({ node, ...rest }) => rest);
+
+    expect(pruned).toMatchSnapshot();
 });
 

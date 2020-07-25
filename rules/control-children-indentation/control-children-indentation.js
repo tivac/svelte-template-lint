@@ -1,40 +1,52 @@
 "use strict";
 
-// TODO: enforce that the childrenl of a control statement like {#if}{/if}
+// enforce that the children of a control statement like {#if}{/if}
 // are indented by the specified amount
-module.exports = ({ id, ast, config, meta }) => {
+module.exports = ({ config, meta }) => {
     const { indent = 4 } = config;
+
+    const stack = [];
 
     let start = false;
 
+    const begin = (node) => {
+        stack.push(node);
+        
+        // + 1 for the trailing "}" on the expression
+        start = node.expression.end + 1;
+    };
+    const end = () => stack.pop();
+
     return {
-        "IfBlock:enter"(node) {
-            console.log("IfBlock", node);
-
-            // Extra + 1 is for the trailing "}"
-            start = node.expression.end + 1;
-        },
-
-        "IfBlock:exit"() {
-            start = false;
-        },
+        "IfBlock:enter" : begin,
+        "IfBlock:exit"  : end,
 
         "*"(node, parent, prop) {
-            console.log(prop);
-
             // Ignore if:
-            // Not in an if block
-            // Already an if block
-            // Looking at if expression itself
-            if(!start || node.type === "IfBlock" || prop === "expression") {
-                return;
+            // No previous node we care about
+            // Still in the prev node we did care about
+            // Looking at an expression
+            if(!stack.length || stack[stack.length - 1] === node || prop === "expression") {
+                return false;
             }
 
-            if(node.start < (start + indent)) {
-                meta.report({
-                    plugn : "control-children-indentation",
+            const isText = node.type === "Text";
+
+            // console.log({ start, node });
+
+            // + 1 to account for newlines, maybe?
+            if(!isText && node.start !== (start + indent + 1)) {
+                return meta.report({
+                    plugin  : "control-children-indentation",
+                    message : `Expected indentation of ${indent}, got ${node.start - start - 1} instead`,
                     node,
                 });
+            }
+
+            if(isText) {
+                // TODO: split apart on "\n", check that each line begins with
+                // expected indentation somehow
+                start = node.end;
             }
         },
     };
