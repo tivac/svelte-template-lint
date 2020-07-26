@@ -21,5 +21,6 @@ module.exports = {
     rules : {
         "jest/no-test-callback" : "warn",
         "jest/no-try-expect"    : "warn",
+        "consistent-return"     : "off",
     },
 };

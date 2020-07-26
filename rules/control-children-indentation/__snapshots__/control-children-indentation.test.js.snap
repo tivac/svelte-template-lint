@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`control-children-indentation - Indent 4 text failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 4, got -1 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`control-children-indentation - Indent 4 text success 1`] = `Array []`;
+
 exports[`control-children-indentation - indent 0 failure 1`] = `
 Array [
   Object {

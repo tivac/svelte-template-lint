@@ -4,7 +4,7 @@ const dedent = require("dedent");
 
 const lint = require("../../index.js");
 
-const config = (indent) => ({
+const config = (indent = 4) => ({
     rules : {
         "control-children-indentation" : [ "warn", {
             indent,
@@ -13,46 +13,69 @@ const config = (indent) => ({
 });
 
 const specimens = [
+    // [
+    //     "indent 4 success",
+    //     `
+    //     {#if true}
+    //         <div>a</div>
+    //     {/if}
+    //     `
+    // ],
+    // [
+    //     "indent 4 failure",
+    //     `
+    //     {#if true}
+    //     <div>a</div>
+    //     {/if}
+    //     `
+    // ],
+    // [
+    //     "indent 0 success",
+    //     `
+    //     {#if true}
+    //     <div>a</div>
+    //     {/if}
+    //     `,
+    //     config(0),
+    // ],
+    // [
+    //     "indent 0 failure",
+    //     `
+    //     {#if true}
+    //         <div>a</div>
+    //     {/if}
+    //     `,
+    //     config(0),
+    // ],
+    // [
+    //     "Indent 4 multiple success",
+    //     `
+    //     {#if true}
+    //         <div>a</div>
+    //         <div>b</div>
+    //     {/if}
+    //     `
+    // ],
+    // [
+    //     "Indent 4 text success",
+    //     `
+    //     {#if true}
+    //         a
+    //     {/if}
+    //     `
+    // ],
     [
-        "indent 4 success",
+        "Indent 4 text failure",
         `
         {#if true}
-            <div>a</div>
+          a
         {/if}
         `,
-        config(4),
-    ],
-    [
-        "indent 4 failure",
-        `
-        {#if true}
-        <div>a</div>
-        {/if}
-        `,
-        config(4),
-    ],
-    [
-        "indent 0 success",
-        `
-        {#if true}
-        <div>a</div>
-        {/if}
-        `,
-        config(0),
-    ],
-    [
-        "indent 0 failure",
-        `
-        {#if true}
-            <div>a</div>
-        {/if}
-        `,
-        config(0),
     ],
 ];
 
 it.each(
-    specimens.map(([ name, spec, options ]) => [ name, dedent(spec), options ])
+    specimens.map(([ name, spec, options = config() ]) => [ name, dedent(spec), options ])
 )("control-children-indentation - %s", async (name, spec, options) => {
     const result = await lint(`${name}.svelte`, spec, options);
 
