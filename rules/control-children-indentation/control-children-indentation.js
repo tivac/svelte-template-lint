@@ -1,22 +1,29 @@
 "use strict";
 
+const leadingSpacesRegex = /^\s+/;
+
 // enforce that the children of a control statement like {#if}{/if}
 // are indented by the specified amount
 module.exports = ({ config, meta }) => {
     const { indent = 4 } = config;
-    const textRegex = new RegExp(` {${indent}}\\S`);
 
-    const stack = [];
-
-    let start = false;
+    // 0 needs to be a special case
+    const textRegex = new RegExp(indent === 0 ? `^\\S` : `^ {${indent}}\\S`);
 
     const begin = (node) => {
+        // node.context is for {#each} or {#await}
+        // node.expression is for {#if}
+        // node is for {:else}
+        const { end } = node.context || node.expression || node;
+        
         // + 1 for the trailing "}" on the expression
-        start = node.expression.end + 1;
+        const start = end + 1;
 
         node.children.forEach((child, idx) => {
             const prev = node.children[idx - 1];
-            
+
+            // console.log({ start, childstart : child.start });
+
             // Tag as first node won't have any whitespace before it, so check is simple
             if(!prev && child.type !== "Text" && child.start !== (start + indent + 1)) {
                 return meta.report({
@@ -37,10 +44,13 @@ module.exports = ({ config, meta }) => {
                     }
 
                     if(!textRegex.test(part)) {
+                        // String.proto.match() can return null, so the || [] is important
+                        const [ leadingSpaces = "" ] = part.match(leadingSpacesRegex) || [];
+
                         return meta.report({
                             plugin  : "control-children-indentation",
                             // TODO: this indentation value is totally wrong
-                            message : `Expected indentation of ${indent}, got ${child.start - start - 1} instead`,
+                            message : `Expected indentation of ${indent}, got ${leadingSpaces.length} instead`,
                             node,
                         });
                     }
@@ -48,43 +58,10 @@ module.exports = ({ config, meta }) => {
             }
         });
     };
-    const end = () => stack.pop();
 
     return {
-        "IfBlock:enter" : begin,
-        "IfBlock:exit"  : end,
-
-        // "*"(node, parent, prop) {
-        //     // Ignore if:
-        //     // No previous node we care about
-        //     // Still in the prev node we did care about
-        //     // Looking at an expression
-        //     const latest = stack[stack.length - 1];
-
-        //     if(!stack.length || latest === node || parent !== latest || prop === "expression") {
-        //         return false;
-        //     }
-
-        //     console.log({ start, nodestart : node.start });
-
-        //     const isText = node.type === "Text";
-
-        //     // console.log({ start, node });
-
-        //     // + 1 to account for newlines, maybe?
-        //     if(!isText && node.start !== (start + indent + 1)) {
-        //         return meta.report({
-        //             plugin  : "control-children-indentation",
-        //             message : `Expected indentation of ${indent}, got ${node.start - start - 1} instead`,
-        //             node,
-        //         });
-        //     }
-
-        //     if(isText) {
-        //         // TODO: split apart on "\n", check that each line begins with
-        //         // expected indentation somehow
-        //         start = node.end;
-        //     }
-        // },
+        IfBlock   : begin,
+        // ElseBlock : begin,
+        EachBlock : begin,
     };
 };

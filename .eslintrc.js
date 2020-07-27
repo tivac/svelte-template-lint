@@ -21,6 +21,10 @@ module.exports = {
     rules : {
         "jest/no-test-callback" : "warn",
         "jest/no-try-expect"    : "warn",
+        "jest/expect-expect"    : [ "warn", {
+            assertFunctionNames : [ "expect", "check" ],
+        }],
+
         "consistent-return"     : "off",
     },
 };

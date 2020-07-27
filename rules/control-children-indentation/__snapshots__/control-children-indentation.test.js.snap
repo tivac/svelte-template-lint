@@ -1,17 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`control-children-indentation - Indent 4 text failure 1`] = `
-Array [
-  Object {
-    "message": "Expected indentation of 4, got -1 instead",
-    "plugin": "control-children-indentation",
-  },
-]
-`;
-
-exports[`control-children-indentation - Indent 4 text success 1`] = `Array []`;
-
-exports[`control-children-indentation - indent 0 failure 1`] = `
+exports[`{#each} indent 0 failure 1`] = `
 Array [
   Object {
     "message": "Expected indentation of 0, got 4 instead",
@@ -20,9 +9,20 @@ Array [
 ]
 `;
 
-exports[`control-children-indentation - indent 0 success 1`] = `Array []`;
+exports[`{#each} indent 0 success 1`] = `Array []`;
 
-exports[`control-children-indentation - indent 4 failure 1`] = `
+exports[`{#each} indent 0 text failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 0, got 4 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#each} indent 0 text success 1`] = `Array []`;
+
+exports[`{#each} indent 4 failure 1`] = `
 Array [
   Object {
     "message": "Expected indentation of 4, got 0 instead",
@@ -31,4 +31,63 @@ Array [
 ]
 `;
 
-exports[`control-children-indentation - indent 4 success 1`] = `Array []`;
+exports[`{#each} indent 4 multiple success 1`] = `Array []`;
+
+exports[`{#each} indent 4 success 1`] = `Array []`;
+
+exports[`{#each} indent 4 text failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 4, got 0 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#each} indent 4 text success 1`] = `Array []`;
+
+exports[`{#if} indent 0 failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 0, got 4 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#if} indent 0 success 1`] = `Array []`;
+
+exports[`{#if} indent 0 text failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 0, got 4 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#if} indent 0 text success 1`] = `Array []`;
+
+exports[`{#if} indent 4 failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 4, got 0 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#if} indent 4 multiple success 1`] = `Array []`;
+
+exports[`{#if} indent 4 success 1`] = `Array []`;
+
+exports[`{#if} indent 4 text failure 1`] = `
+Array [
+  Object {
+    "message": "Expected indentation of 4, got 0 instead",
+    "plugin": "control-children-indentation",
+  },
+]
+`;
+
+exports[`{#if} indent 4 text success 1`] = `Array []`;
