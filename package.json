@@ -22,7 +22,7 @@
     "eslint": "^7.5.0",
     "eslint-plugin-jest": "^23.18.0",
     "jest": "^26.1.0",
-    "svelte": "^3.24.0"
+    "svelte": "^3.49.0"
   },
   "dependencies": {
     "cosmiconfig": "^6.0.0",
